@@ -33,12 +33,12 @@ var getBandInTown = function(bandName){
 
 
 var getSpotifySong = function(songName){
-    spotify.search({ type: 'track', query: 'songName' }, function(err, data) {
+    spotify.search({ type: 'track', query: 'songName' }, function(err, response) {
         if (err) {
         return console.log('Error occurred: ' + err);
         }
+    console.log(response.tracks.items); 
     
-    console.log(data.tracks.items[0]); 
     });
 }
 
