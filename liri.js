@@ -1,34 +1,27 @@
 require("dotenv").config();
 
 var keys = require("./keys.js");
-
+var moment = require('moment');
 var Spotify = require('node-spotify-api');
-
 var spotify = new Spotify(keys.spotify);
+
 
 var command = process.argv[2];
 var userInput = process.argv[3]
 
 const axios = require('axios');
 
-axios.get('/user?ID=12345')
-  .then(function (data) {
-    // handle success
-    console.log(data);
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .finally(function () {
-    // always executed
-  });
-
 var getBandInTown = function(bandName){
-    axios.get("https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=codingbootcamp")  
-    .then(function(data){
-        console.log(data);
-    })  
+    var bandURL = "https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=codingbootcamp";
+    axios.get(bandURL)  
+    .then(function(response){
+            // console.log(respsone);
+            for (var i=0; i<response.data.length; i++){
+            console.log("name of the venue: "+response.data[i].venue.name);
+            console.log("Venue location: "+response.data[i].venue.city+", "+response.data[i].venue.region);
+            console.log("Date of the Event: "+moment(response.data[i].datetime).format('MM/DD/YYYY'));
+        }
+    })
     .catch(function (error) {
         // handle error
         console.log(error);
@@ -57,6 +50,10 @@ var pick = function(caseCommand, functionData){
         case 'spotify-this-song':
             getSpotifySong(functionData);
             break;
+        case 'movie-this':
+            getMovie(functionData);
+        case 'do-what-it-says':
+            doWhatItDoBaby(functionData);
         default:
         console.log('LIRI has now idea... what do you want???')
     }
