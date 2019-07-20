@@ -17,9 +17,11 @@ var getBandInTown = function(bandName){
     .then(function(response){
             // console.log(respsone);
             for (var i=0; i<response.data.length; i++){
+            console.log('=============================================');
             console.log("name of the venue: "+response.data[i].venue.name);
             console.log("Venue location: "+response.data[i].venue.city+", "+response.data[i].venue.region);
             console.log("Date of the Event: "+moment(response.data[i].datetime).format('MM/DD/YYYY'));
+            console.log('---------------------------------------------')
         }
     })
     .catch(function (error) {
