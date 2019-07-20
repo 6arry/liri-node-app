@@ -71,7 +71,23 @@ var getMovie = function(movieName){
     };
 
     var movieURL = "http://www.omdbapi.com?t="+movieName+"&y=&plot=short&apikey=trilogy";
-    console.log(movieURL);
+    // console.log(movieURL);
+
+    axios.get(movieURL).then(function(response){
+        var movie = response.data;
+            // console.log(movie.data);
+
+            console.log('=============================================');
+            console.log("* Title of the movie: "+movie.Title+"\r\n");
+            console.log("* Year the movie came out: "+movie.Year+"\r\n");
+            console.log("* IMDB Rating of the movie: "+movie.imdbRating+"\r\n");
+            console.log("* Rotten Tomatoes Rating of the movie: "+movie.Ratings[1].Value+"\r\n");
+            console.log("* Country where the movie was produced: "+movie.Country+"\r\n");
+            console.log("* Language of the movie: "+movie.Language+"\r\n");
+            console.log("* Plot of the movie: "+movie.Plot+"\r\n");
+            console.log("* Actors in the movie: "+movie.Actors+"\r\n");
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+    });
 };
 
 var pick = function(caseCommand, functionData){
