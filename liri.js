@@ -7,21 +7,22 @@ var spotify = new Spotify(keys.spotify);
 
 
 var command = process.argv[2];
-var userInput = process.argv[3]
+var userInput = process.argv.slice(3).join(" ");
 
 var axios = require('axios');
 
+// Bands In Town API: 'concert-this' function =============================================
 var getBandInTown = function(bandName){
     var bandURL = "https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=codingbootcamp";
-    axios.get(bandURL)  
-    .then(function(response){
+    axios.get(bandURL).then(function(response){
             // console.log(respsone);
             for (var i=0; i<response.data.length; i++){
             console.log('=============================================');
+            console.log('Concert #: '+ (i+1));
             console.log("name of the venue: "+response.data[i].venue.name);
             console.log("Venue location: "+response.data[i].venue.city+", "+response.data[i].venue.region);
             console.log("Date of the Event: "+moment(response.data[i].datetime).format('MM/DD/YYYY'));
-            console.log('---------------------------------------------')
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
         }
     })
     .catch(function (error) {
@@ -33,6 +34,7 @@ var getBandInTown = function(bandName){
     });
 }
 
+// Spotify API: 'spotify-this-song' function ==============================================
 var getArtistNames = function(artist){
     return artist.name;
 }
@@ -41,7 +43,7 @@ var getSpotifySong = function(songName){
     if (!songName){
         songName = "The Sign";
     };
-    
+
     spotify.search({ type: 'track', query: songName }, function(err, response) {
         if (err) {
             console.log('Error occurred: ' + err);
@@ -62,6 +64,16 @@ var getSpotifySong = function(songName){
     });
 }
 
+// Axios (OMDB) API: 'movie-this' function
+var getMovie = function(movieName){
+    if (!movieName){
+        movieName = "Mr. Nobody";
+    };
+
+    var movieURL = "http://www.omdbapi.com?t="+movieName+"&y=&plot=short&apikey=trilogy";
+    console.log(movieURL);
+};
+
 var pick = function(caseCommand, functionData){
     switch(caseCommand){
         case 'concert-this':
@@ -72,8 +84,10 @@ var pick = function(caseCommand, functionData){
             break;
         case 'movie-this':
             getMovie(functionData);
+            break;
         case 'do-what-it-says':
             doWhatItDoBaby(functionData);
+            break;
         default:
         console.log('LIRI has no idea... what do you want???')
     }
