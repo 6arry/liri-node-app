@@ -38,6 +38,10 @@ var getArtistNames = function(artist){
 }
 
 var getSpotifySong = function(songName){
+    if (!songName){
+        songName = "The Sign";
+    };
+    
     spotify.search({ type: 'track', query: songName }, function(err, response) {
         if (err) {
             console.log('Error occurred: ' + err);
