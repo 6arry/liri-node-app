@@ -9,7 +9,7 @@ var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
 var userInput = process.argv[3]
 
-const axios = require('axios');
+var axios = require('axios');
 
 var getBandInTown = function(bandName){
     var bandURL = "https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=codingbootcamp";
@@ -33,14 +33,28 @@ var getBandInTown = function(bandName){
     });
 }
 
+var getArtistNames = function(artist){
+    return artist.name;
+}
 
 var getSpotifySong = function(songName){
-    spotify.search({ type: 'track', query: 'songName' }, function(err, response) {
+    spotify.search({ type: 'track', query: songName }, function(err, response) {
         if (err) {
-        return console.log('Error occurred: ' + err);
+            console.log('Error occurred: ' + err);
+            return;
         }
-    console.log(response.tracks.items); 
-    
+        // console.log(response.tracks.items);
+        
+        var songs = response.tracks.items;
+        for(var i=0; i<songs.length; i++){
+            console.log('----------------------------------------------');
+            console.log(i+1);
+            console.log('Artist(s): '+songs[i].artists.map(getArtistNames));
+            console.log('Song name: '+songs[i].name);
+            console.log('Preview song: '+songs[i].preview_url);
+            console.log('Album: '+songs[i].album.name);
+            console.log('==============================================');
+        }
     });
 }
 
@@ -57,7 +71,7 @@ var pick = function(caseCommand, functionData){
         case 'do-what-it-says':
             doWhatItDoBaby(functionData);
         default:
-        console.log('LIRI has now idea... what do you want???')
+        console.log('LIRI has no idea... what do you want???')
     }
 }
 
