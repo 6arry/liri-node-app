@@ -91,6 +91,7 @@ var getMovie = function(movieName){
     });
 };
 
+// Accessing the random.txt file and executing the 2 pieces of info inside
 function doWhatItDoBaby(){
     fs.readFile('random.txt', 'utf8', function(error,data){
         if(error){
