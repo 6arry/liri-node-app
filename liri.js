@@ -120,7 +120,7 @@ var pick = function(caseCommand, functionData){
         default:
         console.log('LIRI has no idea... what do you want???')
     }
-}
+};
 
 var runThis = function(firstArg, secondArg){
     pick(firstArg, secondArg);
