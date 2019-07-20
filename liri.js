@@ -91,6 +91,18 @@ var getMovie = function(movieName){
     });
 };
 
+function doWhatItDoBaby(){
+    fs.readFile('random.txt', 'utf8', function(error,data){
+        if(error){
+            return console.log(error);
+        } else {
+            console.log(data);
+            var randomInfo = data.split(",");
+            runThis(randomInfo[0], randomInfo[1]);
+        }
+    });
+};
+
 var pick = function(caseCommand, functionData){
     switch(caseCommand){
         case 'concert-this':
